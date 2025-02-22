@@ -55,15 +55,13 @@ public class AuthenticationService {
     public AuthResponse login(LoginRequest request) {
         // Authenticate user
         authenticationManager.authenticate(
-            new UsernamePasswordAuthenticationToken(
-                request.getUsername(),
-                request.getPassword()
-            )
-        );
+                new UsernamePasswordAuthenticationToken(
+                        request.getUsername(),
+                        request.getPassword()));
 
         // Find user
         User user = userRepository.findByUsername(request.getUsername())
-            .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new RuntimeException("User not found"));
 
         // Generate JWT token
         String token = jwtService.generateToken(user);
